@@ -16,11 +16,19 @@ def E2E(MODEL_SELECT, NUM_SPOOF_CLASS, NUM_RESNET_BLOCK, AFN_UPSAMPLE, AFN_ACTIV
     elif MODEL_SELECT == 5:
         print('attentive filtering network')
         model = attentive_filtering_network.SpoofSmallAFNet257_400(NUM_SPOOF_CLASS, AFN_UPSAMPLE, AFN_ACTIVATION, NUM_RESNET_BLOCK, FOCAL_LOSS)
+    
     elif MODEL_SELECT == 6:
         print('squeeze-and-excitation network')
         #model = senet.se_resnet18(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
-        #model = senet.se_resnet34(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
+        # model = senet.se_resnet34(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
         model = senet.se_resnet50(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
+        #model = senet.se_resnet101(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
+        #model = senet.se_resnet152(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
+    elif MODEL_SELECT == 7:
+        print('squeeze-and-excitation network')
+        #model = senet.se_resnet18(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
+        model = senet.se_resnet34(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
+        # model = senet.se_resnet50(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
         #model = senet.se_resnet101(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
         #model = senet.se_resnet152(num_classes=NUM_SPOOF_CLASS, focal_loss=FOCAL_LOSS)
 
