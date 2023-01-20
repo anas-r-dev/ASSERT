@@ -47,21 +47,21 @@ class SpoofSmallResNet256_400(nn.Module):
         self.mp1    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn1   = nn.Conv2d(8, 16, kernel_size=(3,3), dilation=(2,2))
         ## block 2
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(16))
         self.block2 = nn.Sequential(*layers)
         self.mp2    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn2   = nn.Conv2d(16, 32, kernel_size=(3,3), dilation=(4,4))
         ## block 3
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block3 = nn.Sequential(*layers)
         self.mp3    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn3   = nn.Conv2d(32, 64, kernel_size=(3,3), dilation=(4,4))
         ## block 4
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(64))
         self.block4 = nn.Sequential(*layers)
@@ -72,7 +72,7 @@ class SpoofSmallResNet256_400(nn.Module):
 
         self.fc  = nn.Linear(self.flat_feats, 100)
         self.bn  = nn.BatchNorm1d(100)	
-	self.re  = nn.ReLU(inplace=True)
+        self.re  = nn.ReLU(inplace=True)
         self.fc_out  = nn.Linear(100, num_classes)
 	
         ## Weights initialization
@@ -83,26 +83,26 @@ class SpoofSmallResNet256_400(nn.Module):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
     
-    def forward(self, x):
-        x = self.expansion(x)
-	## block 1
-        x = self.cnn1(self.mp1(self.block1(x)))
-	#print(x.size())
-        ## block 2
-        x = self.cnn2(self.mp2(self.block2(x)))
+        def forward(self, x):
+            x = self.expansion(x)
+        ## block 1
+            x = self.cnn1(self.mp1(self.block1(x)))
         #print(x.size())
-        ## block 3
-        x = self.cnn3(self.mp3(self.block3(x)))
-        #print(x.size())
-        ## block 4
-        x = self.cnn4(self.mp4(self.block4(x)))
-	#print(x.size())
-        ## FC
-	x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
-        #print(x.size())
- 
-        if self.binary: return x 
-        else: return F.log_softmax(x, dim=-1) # take log-softmax over C classes
+            ## block 2
+            x = self.cnn2(self.mp2(self.block2(x)))
+            #print(x.size())
+            ## block 3
+            x = self.cnn3(self.mp3(self.block3(x)))
+            #print(x.size())
+            ## block 4
+            x = self.cnn4(self.mp4(self.block4(x)))
+            #print(x.size())
+                ## FC
+            x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
+                #print(x.size())
+    
+            if self.binary: return x 
+            else: return F.log_softmax(x, dim=-1) # take log-softmax over C classes
 
 class SpoofSmallResNet257_400(nn.Module):
     ''' small ResNet (less GPU memory) for 257 by 400 feature map '''
@@ -121,21 +121,21 @@ class SpoofSmallResNet257_400(nn.Module):
         self.mp1    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn1   = nn.Conv2d(8, 16, kernel_size=(3,3), dilation=(2,2))
         ## block 2
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(16))
         self.block2 = nn.Sequential(*layers)
         self.mp2    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn2   = nn.Conv2d(16, 32, kernel_size=(3,3), dilation=(4,4))
         ## block 3
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block3 = nn.Sequential(*layers)
         self.mp3    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn3   = nn.Conv2d(32, 64, kernel_size=(3,3), dilation=(4,4))
         ## block 4
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(64))
         self.block4 = nn.Sequential(*layers)
@@ -146,7 +146,7 @@ class SpoofSmallResNet257_400(nn.Module):
 
         self.fc  = nn.Linear(self.flat_feats, 100)
         self.bn  = nn.BatchNorm1d(100)	
-	self.re  = nn.ReLU(inplace=True)
+        self.re  = nn.ReLU(inplace=True)
         self.fc_out  = nn.Linear(100, num_classes)
 	
         ## Weights initialization
@@ -157,26 +157,26 @@ class SpoofSmallResNet257_400(nn.Module):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
     
-    def forward(self, x):
-        x = self.expansion(x)
-	## block 1
-        x = self.cnn1(self.mp1(self.block1(x)))
-	#print(x.size())
-        ## block 2
-        x = self.cnn2(self.mp2(self.block2(x)))
+        def forward(self, x):
+            x = self.expansion(x)
+        ## block 1
+            x = self.cnn1(self.mp1(self.block1(x)))
         #print(x.size())
-        ## block 3
-        x = self.cnn3(self.mp3(self.block3(x)))
+            ## block 2
+            x = self.cnn2(self.mp2(self.block2(x)))
+            #print(x.size())
+            ## block 3
+            x = self.cnn3(self.mp3(self.block3(x)))
+            #print(x.size())
+            ## block 4
+            x = self.cnn4(self.mp4(self.block4(x)))
         #print(x.size())
-        ## block 4
-        x = self.cnn4(self.mp4(self.block4(x)))
-	#print(x.size())
-        ## FC
-	x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
-        #print(x.size())
- 
-        if self.focal_loss: return x
-        else: return F.log_softmax(x, dim=-1) # take log-softmax over C classes
+            ## FC
+            x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
+            #print(x.size())
+    
+            if self.focal_loss: return x
+            else: return F.log_softmax(x, dim=-1) # take log-softmax over C classes
 
 class SpoofResNet30_400(nn.Module):
     ''' primative ResNet for 30 by 400 feature map '''
@@ -193,28 +193,28 @@ class SpoofResNet30_400(nn.Module):
         self.mp1    = nn.MaxPool2d(kernel_size=(1,1))
         self.cnn1   = nn.Conv2d(16, 32, kernel_size=(3,3), dilation=(1,2))
         ## block 2
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block2 = nn.Sequential(*layers)
         self.mp2    = nn.MaxPool2d(kernel_size=(1,1))
         self.cnn2   = nn.Conv2d(32, 32, kernel_size=(3,3), dilation=(2,4))
         ## block 3
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block3 = nn.Sequential(*layers)
         self.mp3    = nn.MaxPool2d(kernel_size=(1,2))
         self.cnn3   = nn.Conv2d(32, 32, kernel_size=(3,3), dilation=(2,4))
         ## block 4
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block4 = nn.Sequential(*layers)
         self.mp4    = nn.MaxPool2d(kernel_size=(1,2))
         self.cnn4   = nn.Conv2d(32, 32, kernel_size=(3,3), dilation=(4,8)) 
         ## block 5
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block5 = nn.Sequential(*layers)
@@ -225,7 +225,7 @@ class SpoofResNet30_400(nn.Module):
 
         self.fc  = nn.Linear(self.flat_feats, 100)
         self.bn  = nn.BatchNorm1d(100)	
-	self.re  = nn.ReLU(inplace=True)
+        self.re  = nn.ReLU(inplace=True)
         self.fc_out  = nn.Linear(100, num_classes)
 	
         ## Weights initialization
@@ -254,7 +254,7 @@ class SpoofResNet30_400(nn.Module):
         x = self.cnn5(self.mp5(self.block5(x)))
         #print(x.size())
         ## FC
-	x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
+        x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
         #print(x.size())
  
         return F.log_softmax(x, dim=-1) # take log-softmax over C classes
@@ -277,28 +277,28 @@ class SpoofResNet257_500(nn.Module):
         self.mp1    = nn.MaxPool2d(kernel_size=(1,1))
         self.cnn1   = nn.Conv2d(16, 32, kernel_size=(3,3), dilation=(2,2))
         ## block 2
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block2 = nn.Sequential(*layers)
         self.mp2    = nn.MaxPool2d(kernel_size=(1,1))
         self.cnn2   = nn.Conv2d(32, 32, kernel_size=(3,3), dilation=(4,4))
         ## block 3
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block3 = nn.Sequential(*layers)
         self.mp3    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn3   = nn.Conv2d(32, 32, kernel_size=(3,3), dilation=(4,4))
         ## block 4
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block4 = nn.Sequential(*layers)
         self.mp4    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn4   = nn.Conv2d(32, 32, kernel_size=(3,3), dilation=(8,8)) 
         ## block 5
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block5 = nn.Sequential(*layers)
@@ -309,7 +309,7 @@ class SpoofResNet257_500(nn.Module):
 
         self.fc  = nn.Linear(self.flat_feats, 100)
         self.bn  = nn.BatchNorm1d(100)	
-	self.re  = nn.ReLU(inplace=True)
+        self.re  = nn.ReLU(inplace=True)
         self.fc_out  = nn.Linear(100, num_classes)
 	
         ## Weights initialization
@@ -323,9 +323,9 @@ class SpoofResNet257_500(nn.Module):
     def forward(self, x):
         ##print(x.size())
         x = self.expansion(x)
-	## block 1
+    ## block 1
         x = self.cnn1(self.mp1(self.block1(x)))
-	##print(x.size())
+    ##print(x.size())
         ## block 2
         x = self.cnn2(self.mp2(self.block2(x)))
         ##print(x.size())
@@ -334,14 +334,14 @@ class SpoofResNet257_500(nn.Module):
         ##print(x.size())
         ## block 4
         x = self.cnn4(self.mp4(self.block4(x)))
-	##print(x.size())
+    ##print(x.size())
         ## block 5
         x = self.cnn5(self.mp5(self.block5(x)))
         ##print(x.size())
         ## FC
-	x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
+        x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
         ##print(x.size())
- 
+
         return F.log_softmax(x, dim=-1) # take log-softmax over C classes
 
     def predict(self, x):
@@ -362,28 +362,28 @@ class SpoofResNet257_400(nn.Module):
         self.mp1    = nn.MaxPool2d(kernel_size=(1,1))
         self.cnn1   = nn.Conv2d(16, 32, kernel_size=(3,3), dilation=(2,2))
         ## block 2
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block2 = nn.Sequential(*layers)
         self.mp2    = nn.MaxPool2d(kernel_size=(1,1))
         self.cnn2   = nn.Conv2d(32, 32, kernel_size=(3,3), dilation=(4,4))
         ## block 3
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block3 = nn.Sequential(*layers)
         self.mp3    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn3   = nn.Conv2d(32, 32, kernel_size=(3,3), dilation=(4,4))
         ## block 4
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block4 = nn.Sequential(*layers)
         self.mp4    = nn.MaxPool2d(kernel_size=(2,2))
         self.cnn4   = nn.Conv2d(32, 32, kernel_size=(3,3), dilation=(8,8)) 
         ## block 5
-	layers = []
+        layers = []
         for i in range(resnet_blocks):
             layers.append(ResBasicBlock(32))
         self.block5 = nn.Sequential(*layers)
@@ -394,7 +394,7 @@ class SpoofResNet257_400(nn.Module):
 
         self.fc  = nn.Linear(self.flat_feats, 100)
         self.bn  = nn.BatchNorm1d(100)	
-	self.re  = nn.ReLU(inplace=True)
+        self.re  = nn.ReLU(inplace=True)
         self.fc_out  = nn.Linear(100, num_classes)
 	
         ## Weights initialization
@@ -423,7 +423,7 @@ class SpoofResNet257_400(nn.Module):
         x = self.cnn5(self.mp5(self.block5(x)))
         ##print(x.size())
         ## FC
-	x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
+        x = self.fc_out(self.re(self.bn(self.fc(x.view(-1, self.flat_feats)))))
         ##print(x.size())
  
         return F.log_softmax(x, dim=-1) # take log-softmax over C classes
